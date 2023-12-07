@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flask-app
+  labels:
+    app: flask
+spec:
+  containers:
+  - name: flask-container
+    image: <votre_nom_utilisateur_docker>/<nom_image>:<version>
+    ports:
+    - containerPort: 8000
+    env:
+    - name: REDIS_HOST
+      value: "redis"
+  restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  selector:
+    app: flask
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
